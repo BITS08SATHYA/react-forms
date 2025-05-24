@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css'
 import {useForm} from 'react-hook-form'
 
 function App() {
 
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, watch} = useForm();
     const onSubmit = (data) => console.log(data);
 
+    const watchedName = watch('name')
+    const watchedEmail = watch('email')
+
+    useEffect(() => {
+        console.log('Name: ' , watchedName);
+    }, [watchedName]);
+
+    useEffect(() => {
+        console.log('Email: ' , watchedEmail);
+    }, [watchedEmail]);
 
   return (
     <div>
