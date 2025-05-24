@@ -10,16 +10,13 @@ function App() {
         console.log(data);
         reset();
     }
-    // const watchedName = watch('name')
-    // const watchedEmail = watch('email')
 
-    // useEffect(() => {
-    //     console.log('Name: ' , watchedName);
-    // }, [watchedName]);
-    //
-    // useEffect(() => {
-    //     console.log('Email: ' , watchedEmail);
-    // }, [watchedEmail]);
+    const validateName = (value) => {
+        if(value !== 'admin'){
+            return 'Only admin is allowed';
+        }
+        return true;
+    }
 
   return (
     <div>
@@ -28,7 +25,11 @@ function App() {
             <label>
                 Name:
                 <input {...register('name', {required: 'Name is required', minLength:
-                        {value: 2, message: 'Name should be atleast 3 characters'}})} />
+                        {value: 2, message: 'Name should be atleast 3 characters'},
+                validate: {
+                    notAdmin: (value) => value !== "admin" || "Admin is not allowed",
+                    isNotNumber: (value) => isNaN(value) || "Name cannot be number"
+                }})} />
             </label>
             {errors.name && <p>{errors.name.message}</p>}
 
