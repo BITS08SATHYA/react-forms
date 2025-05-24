@@ -4,19 +4,19 @@ import {useForm} from 'react-hook-form'
 
 function App() {
 
-    const {register, handleSubmit, watch} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = (data) => console.log(data);
 
-    const watchedName = watch('name')
-    const watchedEmail = watch('email')
+    // const watchedName = watch('name')
+    // const watchedEmail = watch('email')
 
-    useEffect(() => {
-        console.log('Name: ' , watchedName);
-    }, [watchedName]);
-
-    useEffect(() => {
-        console.log('Email: ' , watchedEmail);
-    }, [watchedEmail]);
+    // useEffect(() => {
+    //     console.log('Name: ' , watchedName);
+    // }, [watchedName]);
+    //
+    // useEffect(() => {
+    //     console.log('Email: ' , watchedEmail);
+    // }, [watchedEmail]);
 
   return (
     <div>
@@ -24,14 +24,16 @@ function App() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <label>
                 Name:
-                <input {...register('name')} />
+                <input {...register('name', {required: 'Name is required', minLength:
+                        {value: 2, message: 'Name should be atleast 3 characters'}})} />
             </label>
+            {errors.name && <p>{errors.name.message}</p>}
 
             <label>
                 Email:
-                <input {...register('email')} />
+                <input {...register('email', {required: true})} />
             </label>
-
+            {errors.email && <p>Email is required and should have atleast 4 characters</p>}
             <button type='submit'>Submit</button>
         </form>
     </div>
